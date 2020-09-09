@@ -5,6 +5,7 @@
     <h1>Number Guesing Game in HTML</h1>
 </head>
 <body>
+    <p>The number you guess is between 0 and 100</p>
     <div id="message"></div>
     <input type="number" id="number">
     <button id="guessButton">Guess</button>
@@ -24,11 +25,11 @@
     <script>
         let button = document.getElementById('guessButton');
         let tries = 0;
-        let randomNumber = Math.floor(Math.random() * 1000);
+        let randomNumber = Math.floor(Math.random() * 100);
         let pastGuess = [];
         function reset() {
             tries = 0;
-            randomNumber = Math.floor(Math.random() * 1000);
+            randomNumber = Math.floor(Math.random() * 100);
             pastGuess = [];
         }
         button.addEventListener('click', function() {
