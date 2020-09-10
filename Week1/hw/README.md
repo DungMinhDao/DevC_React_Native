@@ -2,6 +2,6 @@
 
 Time spent: 3 hours
 
-Milestones completed: all 8 milestones
+Milestones completed: all 7 milestones
 
 Link to GIF: https://i.imgur.com/KdUm3oO.gifv

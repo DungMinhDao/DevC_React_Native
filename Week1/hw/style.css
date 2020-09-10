@@ -1,0 +1,8 @@
+.true {
+    display: inline;
+    background-color: green;
+}
+.false {
+    display: inline;
+    background-color: red;
+}
