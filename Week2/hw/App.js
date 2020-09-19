@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { StyleSheet, Text, View, Image, TouchableOpacity, ScrollView } from 'react-native';
+import { Dimensions, StyleSheet, Text, View, Image, TouchableOpacity, ScrollView } from 'react-native';
 import Constants from "expo-constants";
 import { AntDesign, Feather } from "@expo/vector-icons";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
@@ -9,6 +9,8 @@ import { MaterialIcons } from "@expo/vector-icons"
 const POLO_BLUE_COLOR = 'rgb(51,60,87)';
 const FOLLOW_COLOR = 'rgb(71,113,246)';
 const SEND_MESSAGE_COLOR = 'rgb(120,213,250)';
+const WIDTH_DEVICE = Dimensions.get('window').width;
+const HEIGHT_DEVICE = Dimensions.get('window').height;
 
 export default function App() {
   const data = {
@@ -68,14 +70,41 @@ export default function App() {
           <Text style={styles.statsText}>Following</Text>
         </View>
       </View>
-
-
       
-
-      <View style={styles.content}>
-        <ScrollView>
-          <View style={styles.column}></View>
-          <View style={styles.column}></View>
+      <View style={{flex: 10}}> 
+        <ScrollView contentContainerStyle={styles.content}>
+            <View style={styles.contentColumnLeft}> 
+              <Image 
+                style={styles.contentPicture}
+                source={require("./assets/2.jpg")}
+              />
+              <Image 
+                style={styles.contentPicture}
+                source={require("./assets/3.jpg")}
+              />
+              <Image 
+                style={styles.contentPicture}
+                source={require("./assets/4.jpg")}
+              />
+              <Image 
+                style={styles.contentPicture}
+                source={require("./assets/5.jpg")}
+              />
+            </View>
+            <View style={styles.contentColumnRight}>
+              <Image
+                style={styles.contentPicture}
+                source={require("./assets/6.jpg")}
+              />
+              <Image 
+                style={styles.contentPicture}
+                source={require("./assets/7.jpg")}
+              />
+              <Image 
+                style={styles.contentPicture}
+                source={require("./assets/8.jpg")}
+              />
+            </View>
         </ScrollView>
       </View>
 
@@ -178,17 +207,34 @@ const styles = StyleSheet.create({
     fontSize: 12,
   },
   content: {
-    flex: 10,
-
+    flexDirection: "row",                
+    justifyContent: "space-between",
+  },
+  contentColumnLeft: {
+    flex: 1,
+    flexDirection: "column",    
+    paddingRight: 5,
+  },
+  contentColumnRight: {
+    flex: 1,
+    flexDirection: "column",    
+    paddingLeft: 5,
+  },
+  contentPicture: {
+    flex: 1,
+    width: "100%",
+    height: 85,
+    resizeMode: 'cover',
+    marginVertical: 5,
   },
   footer: {
-    flex: 1.5,
+    flex: 2,
     flexDirection: "row",
-    marginBottom: Constants.statusBarHeight,
     justifyContent: "center",
+    alignItems: "center",
   },
   footerIcons: {
-    flex: 0.4,
+    flex: 0.5,
     alignItems: "center",
     fontSize: 25,
     textAlign: "center",
