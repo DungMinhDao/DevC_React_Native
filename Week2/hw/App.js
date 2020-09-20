@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { Dimensions, StyleSheet, Text, View, Image, TouchableOpacity, ScrollView } from 'react-native';
+import React, { useState } from 'react';
+import { Dimensions, Alert, StyleSheet, Text, View, Image, TouchableOpacity, ScrollView } from 'react-native';
 import Constants from "expo-constants";
 import { AntDesign, Feather } from "@expo/vector-icons";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
@@ -13,6 +13,9 @@ const WIDTH_DEVICE = Dimensions.get('window').width;
 const HEIGHT_DEVICE = Dimensions.get('window').height;
 
 export default function App() {
+  const [newStyle, setNewStyle] = useState(1);
+  const [follow, setFollow] = useState("Follow");
+  const allText = ["Follow", "Followed"];
   const data = {
     stats: [
       {number: 210, text: "Photos"},
@@ -21,13 +24,25 @@ export default function App() {
     ],
     images: [],
   };
+
+  function styleButton() {
+    return newStyle == 1? 
+      styles.profileButtonFollow: 
+      styles.profileButtonFollow2;
+  }
+
+  function styleFollow() {
+    const a = follow;
+    const b = a == "Follow"? setFollow("Followed"): setFollow("Follow");
+  }
+
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <AntDesign name="arrowleft" size={25}></AntDesign>
+        <AntDesign name="arrowleft" size={WIDTH_DEVICE/15}></AntDesign>
         <MaterialCommunityIcons
           name="dots-horizontal"
-          size={25}
+          size={WIDTH_DEVICE/15}
         />
       </View>
 
@@ -41,10 +56,22 @@ export default function App() {
           <Text style={styles.profileName}>Dao Minh Dung</Text>
           <Text style={styles.profileJob}>Student</Text>
           <View style={styles.profileButton}>
-            <TouchableOpacity style={styles.profileButtonFollow}>
-              <Text style={{color: 'white'}}>Follow</Text>
+            <TouchableOpacity 
+              style={[styleButton(), styles.shadow]}
+              onPress={()=>{
+                const a = newStyle;
+                setNewStyle(1 - a);
+                styleFollow();
+              }}
+            >
+              <Text style={{color: 'white', fontSize: WIDTH_DEVICE/25}}>{follow}</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.profileButtonSend}>
+            <TouchableOpacity 
+              style={[styles.profileButtonSend, styles.shadow]}
+              onPress={()=>{
+                Alert.alert("Message sent successfully!");
+              }}
+            >
               <MaterialIcons
                 name="send"
                 size={20}
@@ -72,7 +99,7 @@ export default function App() {
       </View>
       
       <View style={{flex: 10}}> 
-        <ScrollView contentContainerStyle={styles.content}>
+        <ScrollView contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
             <View style={styles.contentColumnLeft}> 
               <Image 
                 style={styles.contentPicture}
@@ -129,52 +156,65 @@ export default function App() {
 
 const styles = StyleSheet.create({
   container: {
-    height: "100%",
+    flex: 1,
     marginTop: Constants.statusBarHeight,
-    padding: 25,
+    justifyContent: "center",
+    alignItems: "center",
   },
   header: {
-    flex: 1.5,
+    height: WIDTH_DEVICE / 18,
+    width: WIDTH_DEVICE - 20,
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
   },
   profile: {
-    flex: 4,
+    width: WIDTH_DEVICE * 5/6,
     flexDirection: "row",
     alignItems: "center",
     paddingTop: 20,
     paddingBottom: 20,
   },
   profilePicture: {
-    width: 90,
-    height: 90,
-    borderRadius: 500,
+    width: WIDTH_DEVICE / 4,
+    height: WIDTH_DEVICE / 4,
+    borderRadius: 700,
     marginRight: 20,
   },
   profileInfo: {
-    flexDirection: "column",
+    width: WIDTH_DEVICE * 3/4 - 40,
     justifyContent: "space-evenly",
   },
   profileName: {
     flex: 1,
-    fontWeight: 'bold',
-    fontSize: 17,
+    fontWeight: "600",
+    fontSize: WIDTH_DEVICE / 18,
   },
   profileJob: {
     flex: 1,
     color: '#AAAAAA',
+    fontSize: WIDTH_DEVICE / 22,
+    alignItems: "center",
   },
   profileButton: {
-    flex: 1,
+    width: WIDTH_DEVICE * 1/2 - 20,
+    height: WIDTH_DEVICE / 12,
     flexDirection: "row",
-    paddingTop: 10,
+    // backgroundColor: "#555",
   },
   profileButtonFollow: {
     flex: 2,
     alignItems: "center",
     justifyContent: "center",
     backgroundColor: FOLLOW_COLOR,
+    borderRadius: 20,
+    marginRight: 10,
+  },
+  profileButtonFollow2: {
+    flex: 2,
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "#42a5f5",
     borderRadius: 20,
     marginRight: 10,
   },
@@ -186,49 +226,52 @@ const styles = StyleSheet.create({
     borderRadius: 20,  
   },
   stats: {
-    flex: 3,
+    width: WIDTH_DEVICE * 5/6 ,
+    height: WIDTH_DEVICE/8,
     flexDirection: "row",
-    justifyContent: "space-between",
+    justifyContent: "space-around",
+    marginBottom: WIDTH_DEVICE/20,
   },
   statsBoxes: {
-    flexDirection: "column",
+    justifyContent: "space-around",
   }, 
   statsNumber: {
     alignItems: "center",
     justifyContent: "center",
     textAlign: "center",
-    fontWeight: 'bold',
-    fontSize: 15,
+    fontWeight: "600",
+    fontSize: WIDTH_DEVICE/20,
   },
   statsText: {
     alignItems: "center",
     justifyContent: "center",
     textAlign: "center",
-    fontSize: 12,
+    fontSize: WIDTH_DEVICE/25,
   },
   content: {
+    width: WIDTH_DEVICE * 7/8,
     flexDirection: "row",                
     justifyContent: "space-between",
   },
   contentColumnLeft: {
     flex: 1,
-    flexDirection: "column",    
     paddingRight: 5,
   },
   contentColumnRight: {
     flex: 1,
-    flexDirection: "column",    
     paddingLeft: 5,
   },
   contentPicture: {
     flex: 1,
     width: "100%",
-    height: 85,
+    height: WIDTH_DEVICE/3,
     resizeMode: 'cover',
     marginVertical: 5,
+    borderRadius: 10,
   },
   footer: {
-    flex: 2,
+    height: WIDTH_DEVICE/6,
+    width: WIDTH_DEVICE - 20,
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
@@ -238,5 +281,12 @@ const styles = StyleSheet.create({
     alignItems: "center",
     fontSize: 25,
     textAlign: "center",
+  },
+  shadow: {
+    shadowColor: "black",
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    shadowOffset: {width: 0, height: 4},
+    elevation: 2,
   }
 });
