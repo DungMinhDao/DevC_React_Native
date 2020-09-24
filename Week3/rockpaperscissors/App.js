@@ -57,6 +57,10 @@ export default class App extends React.Component {
       gamePrompt: 'Choose your weapon!',
       userChoice: CHOICES[0],
       computerChoice: CHOICES[0],
+      gamePlayed: 0,
+      gameWin: 0,
+      gameLose: 0,
+      gameTie: 0,
     }
   }
 
@@ -71,16 +75,38 @@ export default class App extends React.Component {
       gamePrompt: result,
       userChoice: newUserChoice,
       computerChoice: newComputerChoice,
+      gamePlayed: this.state.gamePlayed + 1,
+      gameWin: result === 'Victory!'? this.state.gameWin + 1 : this.state.gameWin,
+      gameLose: result === 'Defeat!'? this.state.gameLose + 1 : this.state.gameLose,
+      gameTie: result === 'Tie game!'? this.state.gameTie + 1 : this.state.gameTie,
     })
   };
 
   render() {
+    const played = this.state.gamePlayed;
+    const win = this.state.gameWin;
+    const lose = this.state.gameLose;
+    const tie = this.state.gameTie;
     return (
       <View style={styles.container}>
+        <Text style={{fontSize: WIDTH_DEVICE/20}}>
+          {`Total game played: ${played}`}
+        </Text>
+        <View style={styles.resultContainer}>
+          <Text style={styles.resultBox}>
+            {`Win: ${win} ${played===0?``:`${(win/played*100).toFixed(2)}%`}`}
+          </Text>
+          <Text style={styles.resultBox}>
+            {`Lose: ${lose} ${played===0?``:`${(lose/played*100).toFixed(2)}%`}`}
+          </Text>        
+          <Text style={styles.resultBox}>
+            {`Tie: ${tie} ${played===0?``:`${(tie/played*100).toFixed(2)}%`}`}
+          </Text>
+        </View>
         <Text style={{fontSize: WIDTH_DEVICE/20}}>{this.state.gamePrompt}</Text>
         <View style={styles.choicesContainer}>
           <ChoiceCard player="Player" choice={this.state.userChoice}/>
-          <Text style={{ color: '#250902' }}></Text>
+          <Text style={{color: '#250902', fontSize: WIDTH_DEVICE/20}}>vs</Text>
           <ChoiceCard player="Computer" choice={this.state.computerChoice}/>
         </View>
         {
@@ -100,6 +126,19 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     backgroundColor: '#e9ebee'
   },
+  resultContainer: {
+    height: WIDTH_DEVICE/5,
+    alignItems: 'center',
+    flexDirection: 'row',
+    justifyContent: "center"
+  },
+  resultBox: {
+    fontSize: WIDTH_DEVICE/20,
+    width: WIDTH_DEVICE/4,
+    height: WIDTH_DEVICE/5,
+    justifyContent: "space-around",
+    textAlign: "center",
+  },
   buttonContainer: {
     alignItems: 'center',
     justifyContent: "center",
@@ -109,6 +148,7 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     paddingTop: WIDTH_DEVICE/10,
     paddingBottom: WIDTH_DEVICE/10,
+    marginBottom: WIDTH_DEVICE/10,
     borderColor: 'grey',
     flexDirection: 'row',
     alignItems: 'center',
@@ -117,7 +157,7 @@ const styles = StyleSheet.create({
     shadowRadius: 5,
     shadowOpacity: 0.25,
     shadowColor: 'rgba(0,0,0,0.2)',
-    shadowOffset: { height: 4, width: 0 },
-    elevation: 3,
+    shadowOffset: { height: WIDTH_DEVICE/60, width: 0 },
+    elevation: 2,
   },
 });

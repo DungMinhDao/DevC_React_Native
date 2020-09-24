@@ -29,7 +29,7 @@ export default Button;
 const styles = StyleSheet.create({
     buttonStyle: {
         width: WIDTH_DEVICE/2,
-        margin: 10,
+        margin: WIDTH_DEVICE/60,
         height: WIDTH_DEVICE/8,
         borderRadius: 10,
         alignItems: 'center',
