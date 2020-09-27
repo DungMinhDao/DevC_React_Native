@@ -34,14 +34,15 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     choiceCardTitle: {
-        fontSize: WIDTH_DEVICE/15,
+        fontSize: WIDTH_DEVICE/20,
         color: '#250902'
     },
     choiceDescription: {
-        fontSize: WIDTH_DEVICE/15,
+        fontSize: WIDTH_DEVICE/18,
         color: '#250902',
         fontWeight: 'bold',
-        textDecorationLine: 'underline'
+        textDecorationLine: 'underline',
+        marginBottom: WIDTH_DEVICE/20,
     },    
     choiceImage: {
         width: WIDTH_DEVICE * 0.4,

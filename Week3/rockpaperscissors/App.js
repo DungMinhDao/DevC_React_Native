@@ -5,12 +5,13 @@ import {
   StyleSheet, 
   Text, 
   View,
-  TouchableOpacity,
+  ImageBackground,
 } from 'react-native';
 import Button from './Button';
 import ChoiceCard from './ChoiceCard';
 
 const WIDTH_DEVICE = Dimensions.get('window').width;
+const HEIGHT_DEVICE = Dimensions.get('window').height;
 const CHOICES = [
   {
     name: 'rock',
@@ -87,23 +88,27 @@ export default class App extends React.Component {
     const win = this.state.gameWin;
     const lose = this.state.gameLose;
     const tie = this.state.gameTie;
+    const gamePromptColor = this.state.gamePrompt === 'Victory!'? 'darkgreen':
+      this.state.gamePrompt === 'Defeat!'? 'red': '#CCCC00';
     return (
       <View style={styles.container}>
         <Text style={{fontSize: WIDTH_DEVICE/20}}>
           {`Total game played: ${played}`}
         </Text>
         <View style={styles.resultContainer}>
-          <Text style={styles.resultBox}>
+          <Text style={[styles.resultBox, {color: 'darkgreen'}]}>
             {`Win: ${win} ${played===0?``:`${(win/played*100).toFixed(2)}%`}`}
           </Text>
-          <Text style={styles.resultBox}>
+          <Text style={[styles.resultBox, {color: 'red'}]}>
             {`Lose: ${lose} ${played===0?``:`${(lose/played*100).toFixed(2)}%`}`}
           </Text>        
-          <Text style={styles.resultBox}>
+          <Text style={[styles.resultBox, {color: '#CCCC00'}]}>
             {`Tie: ${tie} ${played===0?``:`${(tie/played*100).toFixed(2)}%`}`}
           </Text>
         </View>
-        <Text style={{fontSize: WIDTH_DEVICE/20}}>{this.state.gamePrompt}</Text>
+        <Text style={{fontSize: WIDTH_DEVICE/20, color: gamePromptColor}}>
+          {this.state.gamePrompt}
+        </Text>
         <View style={styles.choicesContainer}>
           <ChoiceCard player="Player" choice={this.state.userChoice}/>
           <Text style={{color: '#250902', fontSize: WIDTH_DEVICE/20}}>vs</Text>
@@ -134,7 +139,7 @@ const styles = StyleSheet.create({
   },
   resultBox: {
     fontSize: WIDTH_DEVICE/20,
-    width: WIDTH_DEVICE/4,
+    width: WIDTH_DEVICE/3,
     height: WIDTH_DEVICE/5,
     justifyContent: "space-around",
     textAlign: "center",
